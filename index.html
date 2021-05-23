@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
+</head>
+<div class="card" data-index="0">
+    <template id="card-template">
+        <div class="big" id="character">{{character}}</div>
+        <div class="small">
+            <span>Score:</span>
+            <span id="score">{{score}}</span>
+        </div>
+        <div class="small hidden" id="tips">
+            <div>
+                <span>拼音：</span>
+                <span id="pinyin">{{pinyin}}</span>
+            </div>
+            <div>
+                <span>词语：</span>
+                <span id="words">{{words}}</span>
+            </div>
+
+            <div>
+                <span>单元：</span>
+                <span id="source">{{source}}</span>
+            </div>
+        </div>
+    </template>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.min.js"></script>
+<script src='main.js'></script>
+</body>
+</html>

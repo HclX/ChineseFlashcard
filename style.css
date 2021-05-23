@@ -1,0 +1,25 @@
+body {
+    background: black;
+    color:white;
+}
+button {
+    background-color: gray;
+    border: none;
+    color: white;
+}
+
+.card {
+    text-align: center;
+    color: white;
+}
+
+.big {
+    font-size: 320px;
+}
+
+.small {
+    font-size: 50px;
+}
+.hidden {
+    display:none
+}
