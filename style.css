@@ -1,6 +1,7 @@
 body {
     background: black;
     color:white;
+    font-family: 'SimSun';
 }
 button {
     background-color: gray;
@@ -8,7 +9,7 @@ button {
     color: white;
 }
 
-.card {
+div {
     text-align: center;
     color: white;
 }

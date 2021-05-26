@@ -1,6 +1,6 @@
 var chapters = [
     {
-        name: "chapter_1",
+        name: "Chapter 1",
         items: [
             ["强", "qi2ang", "强大 富强 坚强"],
             ["弱", "ru4o", "弱小 软弱，弱点"],
@@ -21,7 +21,7 @@ var chapters = [
         ]
     },
     {
-        name: "chapter_2",
+        name: "Chapter 2",
         items: [
             ["颜", "y2an", "颜色，颜料，五颜六色"],
             ["交", "ji1ao", "交通，交叉，交流"],
@@ -42,7 +42,7 @@ var chapters = [
         ]
     },
     {
-        name: "chapter_3",
+        name: "Chapter 3",
         items: [
             ["待", "d4ai", "等待，接待，对待"],
             ["招", "zh1ao", "招待，打招呼，招手"],
@@ -64,7 +64,7 @@ var chapters = [
         ]
     },
     {
-        name: "chapter_4",
+        name: "Chapter 4",
         items: [
             ["隔", "g2e", "隔开，隔壁"],
             ["淡", "d4an", "淡水，清淡，咸淡"],
@@ -85,7 +85,7 @@ var chapters = [
         ]
     },
     {
-        name: "chapter_5",
+        name: "Chapter 5",
         items: [
             ["将", "ji1ang", "将军，将要，将来"],
             ["军", "j1un", "军人，军营，军装"],
@@ -106,7 +106,7 @@ var chapters = [
         ]
     },
     {
-        name: "chapter_6",
+        name: "Chapter 6",
         items: [
             ["尚", "sh4ang", "和尚，尚好"],
             ["庙", "mi4ao", "庙会，寺庙，观音庙"],
@@ -164,12 +164,11 @@ function buildPunctuation(s) {
 }
 
 
-function buildDict() {
-    var dict = [];
-
+function buildList() {
+    var list = [];
     for (const chapter of chapters) {
         for (const item of chapter.items) {
-            dict.push({
+            list.push({
                 character: item[0],
                 pinyin: buildPunctuation(item[1]),
                 words: item[2],
@@ -178,43 +177,46 @@ function buildDict() {
             });
         }
     }
-
-    return dict;
+    return list;
 }
 
-var dict = buildDict();
-
 $(function() {
-    var $card = $(".card");
+    var $main = $("#main");
     var cardTemplate = $("#card-template").html()
 
+    var wordList = buildList();
+    var wordCnt = wordList.length;
+
     function loadNext() {
-        dict = dict.filter(item => item.score < 3);
-        if (dict.length > 1) {
-            var index = Math.floor(Math.random() * dict.length);
-            var content = Mustache.render(cardTemplate, dict[index]);
-            $card.html(content);
-            $card.data("card-index", index);
+        if (wordList.length > 0) {
+            var index = Math.floor(Math.random() * wordList.length);
+            var content = Mustache.render(cardTemplate, wordList[index]);
+            $main.html(content);
+            $main.data("index", index);
+            $("#progress").html(wordList.length + "/" + wordCnt);
         } else {
-            $card.html("Done, nice job!");
-            $card.data("card-index", -1);
+            $main.data("index", -1);
+            $main.addClass("hidden");
+            $("#progress").addClass("hidden");
+            $("#cover").removeClass("hidden");
         }
     }
 
     var ENTER_KEY = 13;
     var SPACE_KEY = 32;
     $(document).keypress(function(event) {
-        index = $card.data("card-index");
-        if (index < 0) {
-            ;
-        } else {
+        index = $main.data("index");
+        if (index >= 0) {
             var keycode = (event.keyCode ? event.keyCode : event.which);
             if (keycode == ENTER_KEY) {
-                dict[index].score ++;
+                wordList[index].score ++;
+                if (wordList[index].score > 2) {
+                    wordList.splice(index, 1);
+                }
                 loadNext();
             } else if (keycode == SPACE_KEY) {
-                dict[index].score --;
-                $card.find("#tips").removeClass("hidden");
+                wordList[index].score --;
+                $main.find("#tips").removeClass("hidden");
             }
         }
     });
