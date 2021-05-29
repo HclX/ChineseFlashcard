@@ -4,25 +4,37 @@
 # http://xh.5156edu.com/conversion.html
 
 s1 = """
-强弱赞称导尊敬保护程杨咛嗨注副中
-颜交丰首农民充研究枫紫愁运科柿乐
-待招报躺随调节宣陆虹尽客轮份板递式
-隔淡谈宋陈号藤缠绕浇偷斜旗虾滩竟
-将军曹秤切容易弓箭射斤庄稼操睬岭
-尚庙瘦嚷瞎寓遇互引失取盲趟柱瘸哦
+澡臊喵翘妙皱眉夸既具各咯眯胡莓
+微悄准备舞愉雷眠刺位岸仔通姑芽
+铅图改矮盒贝眨应书总该肠情橡要
+鹰搬雀久累休息岛离滚架堆永泳泥
+龟段始敢半傲于步输赢今骄终认坡
+壁借甩拨傻言消湿墙角蝇蚊握挣腰
+企影州塑料橙定熟惊却伙伴吸劲寄
+淹麦死试够唉周叹驮浅姥昨棚挡难
+英降工被银散酸味沙担茎蒲榴啪豌植
+苍晒视野炸粗观软荚纷识胆靠察得
+骆驼围肯窄跪诗李疑霜举短论证评
+铁棒磨针名决习读困夫教室硬功溜伟
 """
 
 s2 = """
-qiáng ruò zàn chēng dǎo zūn jìng bǎo hù chéng yáng níng hēi zhù fù zhōng 
-yán jiāo fēng shǒu nóng mín chōng yán jiū fēng zǐ chóu yùn kē shì lè 
-dài zhāo bào tǎng suí diào jiē xuān lù hóng jìn kè lún fèn bǎn dì shì 
-gé dàn tán sòng chén hào téng chán rào jiāo tōu xié qí xiā tān jìng 
-jiāng jun1 cáo chèng qiē róng yì gōng jiàn shè jīn zhuāng jià cāo cǎi lǐng 
-shàng miào shòu rǎng xiā yù yù hù yǐn shī qǔ máng tàng zhù qué ò
+zǎo sào miāo qiào miào zhòu méi kuā jì jù gè gē mī hú méi 
+wēi qiāo zhǔn bèi wǔ yú léi mián cì wèi àn zǎi tōng gū yá 
+qiān tú gǎi ǎi hé bèi zhǎ yīng shū zǒng gāi cháng qíng xiàng yào 
+yīng bān què jiǔ lèi xiū xī dǎo lí gǔn jià duī yǒng yǒng ní 
+guī duàn shǐ gǎn bàn ào yú bù shū yíng jīn jiāo zhōng rèn pō 
+bì jiè shuǎi bō shǎ yán xiāo shī qiáng jiǎo yíng wén wò zhèng yāo 
+qǐ yǐng zhōu sù liào chéng dìng shú jīng què huǒ bàn xī jìn jì 
+yān mài sǐ shì gòu āi zhōu tàn tuó qiǎn lǎo zuó péng dǎng nán 
+yīng jiàng gōng bèi yín sàn suān wèi shā dān jīng pú liú pā wān zhí 
+cāng shài shì yě zhà cū guān ruǎn jiá fēn shí dǎn kào chá dé 
+luò tuó wéi kěn zhǎi guì shī lǐ yí shuāng jǔ duǎn lùn zhèng píng 
+tiě bàng mó zhēn míng jué xí dú kùn fū jiāo shì yìng gōng liū wěi 
 """
 
 fmt = """    {
-        name: "五年级(上)-第%d单元",
+        name: "四年级(上)-第%d单元",
         items: [
 %s
         ],
@@ -36,7 +48,7 @@ print("*/")
 
 ss = zip(s1.strip().splitlines(), s2.strip().splitlines())
 index = 1
-print("semester_5a = [")
+print("semester_4a = [")
 for x, y in ss:
     sss = zip(x, y.split(' '))
     print(fmt % (index, "\n".join(['            ["%s", "%s", ""],' % ssss for ssss in sss])))
