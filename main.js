@@ -1,7 +1,12 @@
-var allSemesters = new Map(Object.keys(window)
-    .filter(s => s.match(/^semester_.*/g))
-    .sort()
-    .map(x => [x, window[x]]));
+import semester_4a from "./semester_4a.js"
+import semester_4b from "./semester_4b.js"
+import semester_5a from "./semester_5a.js"
+
+var allSemesters = {
+    "4a": semester_4a,
+    "4b": semester_4b,
+    "5a": semester_5a,
+};
 
 function buildPunctuation(s) {
     var punctuations = [
@@ -42,7 +47,7 @@ function buildList(semesters) {
     var list = [];
     for (const s of semesters) {
         for (let idx = 0; idx < s.chapters.length; idx ++) {
-            chapter = s.chapters[idx];
+            var chapter = s.chapters[idx];
             for (const item of chapter) {
                 list.push({
                     character: item[0],
@@ -87,7 +92,7 @@ function play(semester) {
     var ENTER_KEY = 13;
     var SPACE_KEY = 32;
     $(document).keypress(function(event) {
-        index = $card.data("index");
+        var index = $card.data("index");
         if (index >= 0) {
             var keycode = (event.keyCode ? event.keyCode : event.which);
             if (keycode == ENTER_KEY) {
@@ -107,14 +112,14 @@ function play(semester) {
 }
 
 $(function() {
-    var semesters = Array.from(allSemesters.keys())
+    var semesters = Object.keys(allSemesters)
         .sort()
-        .map(x => ({'id': x, 'name': allSemesters.get(x).name}));
+        .map(x => ({'id': x, 'name': allSemesters[x].name}));
     var content = Mustache.render($("#semester_list_template").html(), {data: semesters});
     $("#semester_list").html(content);
 
     $("#play").click(function(){
         var s = $("#semester_list :selected").val();
-        play(allSemesters.get(s));
+        play(allSemesters[s]);
     });
 });
