@@ -13,7 +13,7 @@ gé dàn tán sòng chén hào téng chán rào jiāo tōu xié qí xiā tān j�
 jiāng jun1 cáo chèng qiē róng yì gōng jiàn shè jīn zhuāng jià cāo cǎi lǐng 
 shàng miào shòu rǎng xiā yù yù hù yǐn shī qǔ máng tàng zhù qué ò
 */
-const semester_5a ={
+const data ={
     name: "五年级(上)",
     chapters:
     [
@@ -129,4 +129,4 @@ const semester_5a ={
     ],
 };
 
-export default semester_5a;
+export default data;
