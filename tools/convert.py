@@ -33,24 +33,40 @@ luò tuó wéi kěn zhǎi guì shī lǐ yí shuāng jǔ duǎn lùn zhèng píng
 tiě bàng mó zhēn míng jué xí dú kùn fū jiāo shì yìng gōng liū wěi 
 """
 
-fmt = """    {
-        name: "四年级(上)-第%d单元",
-        items: [
+header = \
+"""
+const data = {
+    name: "四年级(上)",
+    chapters:
+    [
+"""
+
+fmt = \
+"""
+        [
 %s
         ],
-    },"""
+"""
+
+footer = \
+"""
+    ],
+};
+
+export default data;
+"""
 
 print("/*")
-print(s1.strip())
+print(s1.strip('\n'))
 print()
-print(s2.strip())
+print(s2.strip('\n'))
 print("*/")
 
 ss = zip(s1.strip().splitlines(), s2.strip().splitlines())
-index = 1
-print("semester_4a = [")
+print(header.strip('\n'))
+
 for x, y in ss:
     sss = zip(x, y.split(' '))
-    print(fmt % (index, "\n".join(['            ["%s", "%s", ""],' % ssss for ssss in sss])))
-    index += 1
-print("];")
+    print(fmt.strip('\n') % "\n".join(['            ["%s", "%s", ""],' % ssss for ssss in sss]))
+print(footer.strip('\n'))
+

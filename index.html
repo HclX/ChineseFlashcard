@@ -16,43 +16,49 @@
             {{/data}}
         </template>
         </select>
-        <input type="button" id="play" value="开始">
+        <br>
+        <input type="button" id="practice" value="练习">
+        <input type="button" id="test" value="测试">
     </div>
     <div class="page hidden" id="main">
         <div class="small">
             <span id="progress"></span>
         </div>
-        <div id="card" data-index="0">
-            <template id="card-template">
-                <div class="big" id="character">{{character}}</div>
-                <div class="small">
-                    <span>Score:</span>
-                    <span id="score">{{score}}</span>
-                </div>
-                <div class="small hidden" id="tips">
-                    <div>
-                        <span>拼音：</span>
-                        <span id="pinyin">{{pinyin}}</span>
-                    </div>
-                    <div>
-                        <span>词语：</span>
-                        <span id="words">{{words}}</span>
-                    </div>
-                    <div>
-                        <span>单元：</span>
-                        <span id="source">{{source}}</span>
-                    </div>
-                </div>
-            </template>
+        <div class="big" data-index="-1" id="character"></div>
+        <div class="small hidden" id="practice">
+            <div id="pinyin_display"></div>
+            <input type="text" id="pinyin_input" name="pinyin"/>
+        </div>
+                <!--<div id="progressBar"><div></div></div>-->
+        <div class="small">
+            <span>Score:</span>
+            <span id="score">{{score}}</span>
+        </div>
+        <div class="small hidden" id="tips">
         </div>
     </div>
     <div class="page hidden" id="done">
         <div class="big">完成！</div>
     </div>
+    <div class="page hidden">
+        <template id="tips_template">
+            <div>
+                <span>拼音：</span>
+                <span id="pinyin">{{pinyin}}</span>
+            </div>
+            <div>
+                <span>词语：</span>
+                <span id="words">{{words}}</span>
+            </div>
+            <div>
+                <span>单元：</span>
+                <span id="source">{{source}}</span>
+            </div>
+        </template>
+    </div>
 </body>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.min.js"></script>
-<script type="module" src="./main.js" charset="utf-8"></script>
-</>
+<script type="module" src="./js/main.js" charset="utf-8"></script>
 </html>

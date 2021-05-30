@@ -24,7 +24,7 @@ lì nài fán yán sù xīn dān xíng tǐ xiàng miáo piàn jiǎn dá fú zhe
 suī qín xìng shùn féi yǎng zú yì céng jīn fǎn tiān biǎn fú xiāng pù jí
 */
 
-const semester_4b = {
+const data = {
     name: "四年级(下)",
     chapters: 
     [
@@ -233,4 +233,4 @@ const semester_4b = {
     ],
 };
 
-export default semester_4b;
+export default data;
