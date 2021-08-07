@@ -5,9 +5,9 @@
 隔淡谈宋陈号藤缠绕浇偷斜旗虾滩竟
 将军曹秤切容易弓箭射斤庄稼操睬岭
 尚庙瘦嚷瞎寓遇互引失取盲趟柱瘸哦
-岳楚插历史童撞守拜浅校闻桩由株捡
+岳楚插历史童撞守拜钱校闻桩由株捡
 甘茂盛内皇帝孙罚顿酒员恭警官罗还
-部川志培育雄贺卡宽捧遥诚纪籽盆著
+部川志培育雄贺卡宽捧遥诚纪籽盆煮
 商邮局付账欠餐便计妻塞杀曾院元彼
 迹除替至费吞安凡详较颈跛玻璃嘻
 
@@ -17,9 +17,9 @@ dài zhāo bào tǎng suí diào jiē xuān lù hóng jìn kè lún fèn bǎn d�
 gé dàn tán sòng chén hào téng chán rào jiāo tōu xié qí xiā tān jìng 
 jiāng jūn cáo chèng qiē róng yì gōng jiàn shè jīn zhuāng jià cāo cǎi lǐng 
 shàng miào shòu rǎng xiā yù yù hù yǐn shī qǔ máng tàng zhù qué ò
-yuè chǔ chā lì shǐ tóng zhuàng shǒu bài qiǎn xiào wén zhuāng yóu zhū jiǎn 
+yuè chǔ chā lì shǐ tóng zhuàng shǒu bài qián xiào wén zhuāng yóu zhū jiǎn 
 gān mào shèng nèi huáng dì sūn fá dùn jiǔ yuán gōng jǐng guān luó hái 
-bù chuān zhì péi yù xióng hè kǎ kuān pěng yáo chéng jì zǐ pén zhù 
+bù chuān zhì péi yù xióng hè kǎ kuān pěng yáo chéng jì zǐ pén zhǔ 
 shāng yóu jú fù zhàng qiàn cān biàn jì qī sāi shā céng yuàn yuán bǐ 
 jì chú tì zhì fèi tūn ān fán xiáng jiào jǐng bǒ bō lí xī 
 
