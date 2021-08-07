@@ -15,11 +15,11 @@ qiáng ruò zàn chēng dǎo zūn jìng bǎo hù chéng yáng níng hēi zhù f�
 yán jiāo fēng shǒu nóng mín chōng yán jiū fēng zǐ chóu yùn kē shì lè 
 dài zhāo bào tǎng suí diào jiē xuān lù hóng jìn kè lún fèn bǎn dì shì 
 gé dàn tán sòng chén hào téng chán rào jiāo tōu xié qí xiā tān jìng 
-jiāng jun1 cáo chèng qiē róng yì gōng jiàn shè jīn zhuāng jià cāo cǎi lǐng 
+jiāng jūn cáo chèng qiē róng yì gōng jiàn shè jīn zhuāng jià cāo cǎi lǐng 
 shàng miào shòu rǎng xiā yù yù hù yǐn shī qǔ máng tàng zhù qué ò
 yuè chǔ chā lì shǐ tóng zhuàng shǒu bài qiǎn xiào wén zhuāng yóu zhū jiǎn 
 gān mào shèng nèi huáng dì sūn fá dùn jiǔ yuán gōng jǐng guān luó hái 
-bù chuān zhì péi yù xióng hè kǎ kuān pěng yáo chéng jì zǐ pén zhe 
+bù chuān zhì péi yù xióng hè kǎ kuān pěng yáo chéng jì zǐ pén zhù 
 shāng yóu jú fù zhàng qiàn cān biàn jì qī sāi shā céng yuàn yuán bǐ 
 jì chú tì zhì fèi tūn ān fán xiáng jiào jǐng bǒ bō lí xī 
 
@@ -103,7 +103,7 @@ const data ={
         ],
         [
             ["将", "jiāng", "将军，将要，将来"],
-            ["军", "jun1", "军人，军营，军装"],
+            ["军", "jūn", "军人，军营，军装"],
             ["曹", "cáo", "曹操，姓曹"],
             ["秤", "chèng", "电子秤，天平秤"],
             ["切", "qiē/qiè", "切开，切瓜，一切"],
