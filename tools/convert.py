@@ -1,7 +1,7 @@
 #!/bin/python3
+# -*- coding: utf-8 -*-
 
-# Text and pinyin comes from this website
-# http://xh.5156edu.com/conversion.html
+import sys
 
 s1 = """
 牢哇华哗害饱饿鹿已豆越经
@@ -17,32 +17,45 @@ s1 = """
 整摆灯笼因表惭愧蝈提迷肚
 司假缸主慌吓浮桶念机汽重
 """
-s2 = """
-láo wa huá huá hài bǎo è lù yǐ dòu yuè jīng 
-lāo jǐng yè lián lìng jiē chuǎn huī bó nín zāo hǎn 
-děng qīng gān zhuō tíng zhuān hú dié yì wàng jì hú 
-nuǎn shū yīn nào hū guāng shì lì tǐng jiè wā hú 
-chǎo táo shī zhǎo qiú shéng duàn lǘ shāng rú zhuǎn xiàn 
-wō páng liú yǔ chà jí jù réng qīn guàn wō jiù 
-suǒ zhuāng dá jiǎng liǎng cuò táo chuán liè diū diāo chòu 
-zhǐ zhēng zhēng xī shé huài lǐ sī shòu xǐ huān tíng 
-jié shí gǎn kǎn zào rěn dàn xiān xià ér qiě shū 
-zhuó yī zhí cǎi mì gǔ biàn cuī fēng gōu láo cóng 
-zhěng bǎi dēng lóng yīn biǎo cán kuì guō tí mí dù 
-sī jiǎ gāng zhǔ huāng xià fú tǒng niàn jī qì zhòng 
-"""
+
+def load_dict():
+    py_dict = {}
+    for line in open("dict.txt", "r", encoding='utf-8'):
+        py_dict.update({x[0]: x[1:] for x in line.strip().split(',') if len(x)>1})
+
+    return py_dict
+
+unit = 1
+part = 'a'
+
+out_file = sys.stdout
+if len(sys.argv) > 1 and len(sys.argv[1]) == 2:
+    unit = int(sys.argv[1][0])
+    part = sys.argv[1][1]
+
+    if unit < 1 or unit > 9:
+        print("Invalid unit: %s" % unit)
+        sys.exit(1)
+
+    if part not in ['a', 'b']:
+        print("Invalid part: %s" % part)
+        sys.exit(1)
+
+    out_file = open("%d%s.js" %(unit, part), "w", encoding="utf-8")
+
 
 header = \
 """
 const data = {
-    name: "三年级(下)",
+    name: "%s年级(%s)",
     chapters:
     [
-"""
+""" % ("一二三四五六七八九十"[unit - 1], "上下"[ord(part) - ord('a')])
 
 fmt = \
 """
         [
+            /* āáǎàōóǒòēéěèīíǐìūúǔùǖǘǚǜü */
 %s
         ],
 """
@@ -55,19 +68,15 @@ footer = \
 export default data;
 """
 
-print("/*")
-print(s1.strip('\n'))
-print()
-print(s2.strip('\n'))
-print()
-print("āáǎàōóǒòēéěèīíǐìūúǔùǖǘǚǜü")
-print("*/")
+print("/*", file=out_file)
+print(s1.strip('\n'), file=out_file)
+print(file=out_file)
+print("*/", file=out_file)
 
-ss = zip(s1.strip().splitlines(), s2.strip().splitlines())
-print(header.strip('\n'))
+print(header.strip('\n'), file=out_file)
 
-for x, y in ss:
-    sss = zip(x, y.split(' '))
-    print(fmt.strip('\n') % "\n".join(['            ["%s", "%s", ""],' % ssss for ssss in sss]))
-print(footer.strip('\n'))
-
+py_dict = load_dict()
+for s in s1.strip().splitlines():
+    ss = [(x, py_dict[x]) for x in s]
+    print(fmt.strip('\n') % "\n".join(['            ["%s", "%s", ""],' % sss for sss in ss]), file=out_file)
+print(footer.strip('\n'), file=out_file)
