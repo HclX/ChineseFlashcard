@@ -1,8 +1,12 @@
+import semester_3a from "./data/3a.js"
+import semester_3b from "./data/3b.js"
 import semester_4a from "./data/4a.js"
 import semester_4b from "./data/4b.js"
 import semester_5a from "./data/5a.js"
 
 var allSemesters = {
+    "3a": semester_3a,
+    "3b": semester_3b,
     "4a": semester_4a,
     "4b": semester_4b,
     "5a": semester_5a,

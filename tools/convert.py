@@ -59,6 +59,8 @@ print("/*")
 print(s1.strip('\n'))
 print()
 print(s2.strip('\n'))
+print()
+print("āáǎàōóǒòēéěèīíǐìūúǔùǖǘǚǜü")
 print("*/")
 
 ss = zip(s1.strip().splitlines(), s2.strip().splitlines())
