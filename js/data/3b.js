@@ -26,7 +26,7 @@ zhěng bǎi dēng lóng yīn biǎo cán kuì guō tí mí dù
 sī jiǎ gāng zhǔ huāng xià fú tǒng niàn jī qì zhòng 
 */
 const data = {
-    name: "三年级(上)",
+    name: "三年级(下)",
     chapters:
     [
         [
