@@ -4,39 +4,38 @@
 # http://xh.5156edu.com/conversion.html
 
 s1 = """
-澡臊喵翘妙皱眉夸既具各咯眯胡莓
-微悄准备舞愉雷眠刺位岸仔通姑芽
-铅图改矮盒贝眨应书总该肠情橡要
-鹰搬雀久累休息岛离滚架堆永泳泥
-龟段始敢半傲于步输赢今骄终认坡
-壁借甩拨傻言消湿墙角蝇蚊握挣腰
-企影州塑料橙定熟惊却伙伴吸劲寄
-淹麦死试够唉周叹驮浅姥昨棚挡难
-英降工被银散酸味沙担茎蒲榴啪豌植
-苍晒视野炸粗观软荚纷识胆靠察得
-骆驼围肯窄跪诗李疑霜举短论证评
-铁棒磨针名决习读困夫教室硬功溜伟
+牢哇华哗害饱饿鹿已豆越经
+捞井夜连另接喘灰伯您糟喊
+等蜻竿捉蜓专蝴蝶意忘记湖
+暖舒音闹忽光世粒挺界挖湖
+吵淘狮爪求绳断驴伤如转现
+窝旁流羽差极句仍亲冠喔救
+所装答讲俩错逃传猎丢叼臭
+纸筝争溪折坏理思受喜欢停
+结实感砍造忍但鲜夏而且叔
+啄一直采蜜鼓遍催蜂钩劳丛
+整摆灯笼因表惭愧蝈提迷肚
+司假缸主慌吓浮桶念机汽重
 """
-
 s2 = """
-zǎo sào miāo qiào miào zhòu méi kuā jì jù gè gē mī hú méi 
-wēi qiāo zhǔn bèi wǔ yú léi mián cì wèi àn zǎi tōng gū yá 
-qiān tú gǎi ǎi hé bèi zhǎ yīng shū zǒng gāi cháng qíng xiàng yào 
-yīng bān què jiǔ lèi xiū xī dǎo lí gǔn jià duī yǒng yǒng ní 
-guī duàn shǐ gǎn bàn ào yú bù shū yíng jīn jiāo zhōng rèn pō 
-bì jiè shuǎi bō shǎ yán xiāo shī qiáng jiǎo yíng wén wò zhèng yāo 
-qǐ yǐng zhōu sù liào chéng dìng shú jīng què huǒ bàn xī jìn jì 
-yān mài sǐ shì gòu āi zhōu tàn tuó qiǎn lǎo zuó péng dǎng nán 
-yīng jiàng gōng bèi yín sàn suān wèi shā dān jīng pú liú pā wān zhí 
-cāng shài shì yě zhà cū guān ruǎn jiá fēn shí dǎn kào chá dé 
-luò tuó wéi kěn zhǎi guì shī lǐ yí shuāng jǔ duǎn lùn zhèng píng 
-tiě bàng mó zhēn míng jué xí dú kùn fū jiāo shì yìng gōng liū wěi 
+láo wa huá huá hài bǎo è lù yǐ dòu yuè jīng 
+lāo jǐng yè lián lìng jiē chuǎn huī bó nín zāo hǎn 
+děng qīng gān zhuō tíng zhuān hú dié yì wàng jì hú 
+nuǎn shū yīn nào hū guāng shì lì tǐng jiè wā hú 
+chǎo táo shī zhǎo qiú shéng duàn lǘ shāng rú zhuǎn xiàn 
+wō páng liú yǔ chà jí jù réng qīn guàn wō jiù 
+suǒ zhuāng dá jiǎng liǎng cuò táo chuán liè diū diāo chòu 
+zhǐ zhēng zhēng xī shé huài lǐ sī shòu xǐ huān tíng 
+jié shí gǎn kǎn zào rěn dàn xiān xià ér qiě shū 
+zhuó yī zhí cǎi mì gǔ biàn cuī fēng gōu láo cóng 
+zhěng bǎi dēng lóng yīn biǎo cán kuì guō tí mí dù 
+sī jiǎ gāng zhǔ huāng xià fú tǒng niàn jī qì zhòng 
 """
 
 header = \
 """
 const data = {
-    name: "四年级(上)",
+    name: "三年级(下)",
     chapters:
     [
 """
