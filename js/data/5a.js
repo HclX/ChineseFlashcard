@@ -10,6 +10,7 @@
 部川志培育雄贺卡宽捧遥诚纪籽盆煮
 商邮局付账欠餐便计妻塞杀曾院元彼
 迹除替至费吞安凡详较颈跛玻璃嘻
+顾挥匆弄礼辣含入奔洪使烫锅夹代材
 
 qiáng ruò zàn chēng dǎo zūn jìng bǎo hù chéng yáng níng hēi zhù fù zhōng 
 yán jiāo fēng shǒu nóng mín chōng yán jiū fēng zǐ chóu yùn kē shì lè 
@@ -22,7 +23,7 @@ gān mào shèng nèi huáng dì sūn fá dùn jiǔ yuán gōng jǐng guān luó
 bù chuān zhì péi yù xióng hè kǎ kuān pěng yáo chéng jì zǐ pén zhǔ 
 shāng yóu jú fù zhàng qiàn cān biàn jì qī sāi shā céng yuàn yuán bǐ 
 jì chú tì zhì fèi tūn ān fán xiáng jiào jǐng bǒ bō lí xī 
-
+gù huī cōng nòng lǐ là hán rù bēn hóng shǐ tàng guō jiā dài cái
 */
 const data ={
     name: "五年级(上)",
@@ -221,12 +222,30 @@ const data ={
             ["详", "xiáng", "详细，详尽"],
             ["较", "jiào", "比较多，比较大"],
             ["颈", "jǐng", "长颈鹿"],
-            ["拌", "bàn", "搅拌机，拌凉菜"]
+            ["拌", "bàn", "搅拌机，拌凉菜"],
             ["跛", "bǒ", "跛子"],
             ["玻", "bō", "玻璃"],
             ["璃", "lí", "玻璃"],
             ["嘻", "xī", "嘻嘻"],
         ],
+        [
+            ["顾", "gù", "照顾，顾客"],
+            ["挥", "huī", "挥手，挥舞"],
+            ["匆", "cōng", "匆匆，匆忙"],
+            ["弄", "nòng", "弄好，弄坏"],
+            ["礼", "lǐ", "礼物，送礼"],
+            ["辣", "là", "辣椒，麻辣"],
+            ["含", "hán", "含义，含笑"],
+            ["入", "rù", "入口，进入"],
+            ["奔", "bēn", "奔跑，飞奔"],
+            ["洪", "hóng", "洪水，声音洪亮"],
+            ["使", "shǐ", "使用，使劲"],
+            ["烫", "tàng", "烫伤，滚烫"],
+            ["锅", "guō", "火锅，铁锅"],
+            ["夹", "jiā", "肉夹馍"],
+            ["代", "dài", "年代，代替"],
+            ["材", "cái", "木材，贴踩"], 
+        ]
     ],
 };
 
