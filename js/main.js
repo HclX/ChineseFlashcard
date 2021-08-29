@@ -1,46 +1,46 @@
-import semester_0a from "./data/0a.js"
-import semester_3a from "./data/3a.js"
-import semester_3b from "./data/3b.js"
-import semester_4a from "./data/4a.js"
-import semester_4b from "./data/4b.js"
-import semester_5a from "./data/5a.js"
+import semester_0a from './data/0a.js'
+import semester_3a from './data/3a.js'
+import semester_3b from './data/3b.js'
+import semester_4a from './data/4a.js'
+import semester_4b from './data/4b.js'
+import semester_5a from './data/5a.js'
 
 var allSemesters = {
-    "0a": semester_0a,
-    "3a": semester_3a,
-    "3b": semester_3b,
-    "4a": semester_4a,
-    "4b": semester_4b,
-    "5a": semester_5a,
+    '0a': semester_0a,
+    '3a': semester_3a,
+    '3b': semester_3b,
+    '4a': semester_4a,
+    '4b': semester_4b,
+    '5a': semester_5a,
 };
 
 function buildPinyin(s) {
     var punctuations = [
-        ["1a", "ā"],
-        ["2a", "á"],
-        ["3a", "ǎ"],
-        ["4a", "à"],
-        ["1o", "ō"],
-        ["2o", "ó"],
-        ["3o", "ǒ"],
-        ["4o", "ò"],
-        ["1e", "ē"],
-        ["2e", "é"],
-        ["3e", "ě"],
-        ["4e", "è"],
-        ["1i", "ī"],
-        ["2i", "í"],
-        ["3i", "ǐ"],
-        ["4i", "ì"],
-        ["1u", "ū"],
-        ["2u", "ú"],
-        ["3u", "ǔ"],
-        ["4u", "ù"],
-        ["1v", "ǖ"],
-        ["2v", "ǘ"],
-        ["3v", "ǚ"],
-        ["4v", "ǜ"],
-        ["v", "ü"],
+        ['1a', 'ā'],
+        ['2a', 'á'],
+        ['3a', 'ǎ'],
+        ['4a', 'à'],
+        ['1o', 'ō'],
+        ['2o', 'ó'],
+        ['3o', 'ǒ'],
+        ['4o', 'ò'],
+        ['1e', 'ē'],
+        ['2e', 'é'],
+        ['3e', 'ě'],
+        ['4e', 'è'],
+        ['1i', 'ī'],
+        ['2i', 'í'],
+        ['3i', 'ǐ'],
+        ['4i', 'ì'],
+        ['1u', 'ū'],
+        ['2u', 'ú'],
+        ['3u', 'ǔ'],
+        ['4u', 'ù'],
+        ['1v', 'ǖ'],
+        ['2v', 'ǘ'],
+        ['3v', 'ǚ'],
+        ['4v', 'ǜ'],
+        ['v', 'ü'],
     ];
 
     for (const [key, value] of punctuations) {
@@ -84,22 +84,24 @@ function buildCharMap(sid) {
                 char: item[0],
                 pinyin: item[1].split('/'),
                 words: item[2],
-                source: s.name + "--" + idx,
+                source: s.name + '--' + idx,
             };
         }
     }
     return charMap;
 }
 
+var MAX_TOTAL_CNT = 3;
+
 var _context = {}
 function ctxInit(sid) {
     try {
-        _context = JSON.parse(localStorage.getItem("data_" + sid));
+        _context = JSON.parse(localStorage.getItem('data_' + sid));
     } catch (e) {
         _context = null;
     }
 
-    if (_context == null) {
+    if (_context === null) {
         _context = {sid:undefined, chars: undefined};
     }
 
@@ -113,7 +115,7 @@ function ctxInit(sid) {
 
     if (Object.keys(_context.stat).length === 0) {
         for (var char in _context.chars) {
-            _context.stat[char] = {totalCnt: 1, failureCnt: 0};
+            _context.stat[char] = {totalCnt: 1, failureCnt: 1};
         }
     }
 
@@ -127,11 +129,12 @@ function ctxInit(sid) {
     }
     if (Object.keys(_context.test.chars).length === 0) {
         for (var char in _context.chars) {
-            var totalCnt = Math.trunc(3 * _context.stat[char].failureCnt / _context.stat[char].totalCnt + 1);
+            var totalCnt = Math.trunc((MAX_TOTAL_CNT - 1) * _context.stat[char].failureCnt / _context.stat[char].totalCnt + 1);
             _context.test.chars[char] = {totalCnt: totalCnt, correctCnt: 0};
         }
     }
 }
+
 
 function ctxUpdate(char, success) {
     if (success) {
@@ -141,20 +144,24 @@ function ctxUpdate(char, success) {
         _context.test.chars[char].totalCnt ++;
     }
 
+    if (_context.test.chars[char].totalCnt > MAX_TOTAL_CNT) {
+        _context.test.chars[char].totalCnt = MAX_TOTAL_CNT;
+    }
+
     _context.stat[char].totalCnt ++;
-    if (_context.test.chars[char].correctCnt === _context.test.chars[char].totalCnt) {
+    if (_context.test.chars[char].correctCnt >= _context.test.chars[char].totalCnt) {
         delete _context.test.chars[char];
     }
 
     // hide `sid` and `chars` in the JSON file
     const progressObj = {..._context, sid: undefined, chars: undefined};
-    localStorage.setItem("data_" + _context.sid, JSON.stringify(progressObj));
+    localStorage.setItem('data_' + _context.sid, JSON.stringify(progressObj));
 }
 
 function ctxClear() {
     // hide `sid` and `chars` in the JSON file
     const progressObj = {..._context, sid: undefined, chars: undefined, test: undefined};
-    localStorage.setItem("data_" + _context.sid, JSON.stringify(progressObj));
+    localStorage.setItem('data_' + _context.sid, JSON.stringify(progressObj));
 }
 
 function ctxGetTestChar() {
@@ -167,8 +174,8 @@ function ctxGetTestChar() {
             pinyin: _context.chars[char].pinyin,
             words: _context.chars[char].words,
             source: _context.chars[char].source,
-            score: _context.test.chars[char].correctCnt + "/" + _context.test.chars[char].totalCnt,
-            progress: chars.length + "/" + Object.keys(_context.chars).length,
+            score: _context.test.chars[char].correctCnt + '/' + _context.test.chars[char].totalCnt,
+            progress: chars.length + '/' + Object.keys(_context.chars).length,
         }
     } else {
         return undefined;
@@ -179,142 +186,131 @@ var $start = null;
 var $main = null;
 var $done = null;
 
-function progress(timeleft, timetotal, $element, done) {
-    var progressBarWidth = timeleft * $element.width() / timetotal;
-    $element.find('div').animate({ width: progressBarWidth }, 1);
-    if(timeleft > 0) {
-        setTimeout(function() {
-            progress(timeleft - 1, timetotal, $element, done);
-        }, 100);
-    } else {
-        done();
-    }
-};
-
 function loadNext() {
     var test = ctxGetTestChar();
     if (!test) {
         var endDate = new Date();
         var minutesUsed = Math.trunc((endDate.getTime() - $main.data('start').getTime()) / 60000);
-        $main.addClass("hidden");
-        $done.removeClass("hidden");
-        $done.find("#date").html("完成于" + $.format.toBrowserTimeZone(endDate, "yyyy年M月d日 HH:mm:ss"));
-        $done.find("#time").html("用时" + minutesUsed + "分钟");
+        $main.addClass('hidden');
+        $done.removeClass('hidden');
+        $done.find('#date').html('完成于' + $.format.toBrowserTimeZone(endDate, 'yyyy年M月d日 HH:mm:ss'));
+        $done.find('#time').html('用时' + minutesUsed + '分钟');
     } else {
-        $main.find("#character").html(test.char);
-        $main.find("#score").html(test.score);
-        $main.find("#pinyin_input").focus().val("");
-        $main.find("#pinyin_display").html("");
+        $main.find('#character').html(test.char);
+        $main.find('#score').html(test.score);
+        $main.find('#pinyin_input').focus().val('');
+        $main.find('#pinyin_display').html('');
 
-        $("#progress").html(test.progress);
-        var tips_template = $("#tips_template").html();
-        $main.find("#tips")
-            .addClass("hidden")
+        $('#progress').html(test.progress);
+        var tips_template = $('#tips_template').html();
+        $main.find('#tips')
+            .addClass('hidden')
             .html(Mustache.render(tips_template, test));
         $main.data('test', test);
     }
 }
 
 function showTips() {
-    $main.find("#tips").removeClass("hidden");
-}
-
-function hideTips() {
-    $main.find("#tips").addClass("hidden");
+    $main.find('#tips').removeClass('hidden');
 }
 
 function onResult(result) {
     var test = $main.data('test');
+    ctxUpdate(test.char, result);
     if (result) {
-        ctxUpdate(test.char, true);
+        // Correct!
         loadNext();
     } else {
-        // wrong answer
+        // Wrong!
         showTips();
-        ctxUpdate(test.char, false);
     }
 }
 
 function onAnswer(pinyin) {
     var test = $main.data('test');
-    if (test.pinyin.indexOf(pinyin) < 0) {
-        // wrong answer
-        showTips();
-        ctxUpdate(test.char, false);
-    } else {
-        ctxUpdate(test.char, true);
+    var result = test.pinyin.indexOf(pinyin) >= 0;
+    
+    ctxUpdate(test.char, result);
+    if (result) {
+        // Correct!
         loadNext();
+    } else {
+        // Wrong!
+        showTips();
     }
 }
 
-function clearData(sid, clearAll) {
-    ctxInit(sid);
+function clearData(clearAll) {
     ctxClear();
 }
 
-function startPlay(sid, practiceMode) {
-    ctxInit(sid);
+var ENTER_KEY = 13;
+var SPACE_KEY = 32;
 
-    $main.data("start", new Date());
+function startPlay(mode) {
+    $main.data('start', new Date());
+    if (mode === 'practice') {
+        $main.find('#practice').removeClass('hidden');
+        $main.on('change keyup paste', '#pinyin_input', function(e) {
+            var pinyin = buildSmartPinyin($('#pinyin_input').val());
+            $('#pinyin_display').html(pinyin);
 
-    if (practiceMode) {
-        $main.find("#practice").removeClass("hidden");
-        $main.on('change keyup paste', "#pinyin_input", function(e) {
-            var pinyin = buildSmartPinyin($("#pinyin_input").val());
-            $("#pinyin_display").html(pinyin);
-
-            if (e.type == 'keyup' && 
-                (e.key === 'Enter' || e.keyCode === 13) &&
-                pinyin.length > 0) {
+            if (e.type === 'keyup' && e.keyCode === ENTER_KEY && pinyin.length > 0) {
+                $('#pinyin_input').select();
                 onAnswer(pinyin);
             }
         });
-    } else {
-        var ENTER_KEY = 13;
-        var SPACE_KEY = 32;
-        $main.find("#practice").addClass("hidden");
+    } else if (mode === 'test') {
+        $main.find('#practice').addClass('hidden');
         $(document).keypress(function(event) {
             var keycode = (event.keyCode ? event.keyCode : event.which);
-            if (keycode == ENTER_KEY) {
+            if (keycode === ENTER_KEY) {
                 onResult(true);
-            } else if (keycode == SPACE_KEY) {
+            } else if (keycode === SPACE_KEY) {
                 onResult(false);
             }
         });
+    } else {
+        // unknown mode
     }
 
     loadNext();
 }
 
 $(function() {
-    $start = $("#start");
-    $main = $("#main");
-    $done = $("#done");
+    $start = $('#start');
+    $main = $('#main');
+    $done = $('#done');
+
+    var $list = $start.find('#semester_list');
 
     var semesters = Object.keys(allSemesters)
         .sort()
         .map(x => ({'id': x, 'name': allSemesters[x].name}));
-    var semester_list_template = $start.find("#semester_list_template").html();
+    var semester_list_template = $start.find('#semester_list_template').html();
     var content = Mustache.render(semester_list_template, {data: semesters});
-    $start.find("#semester_list").html(content);
+    $list.html(content);
+
+    $start.on('change', '#semester_list', function() {
+        var s = $start.find('#semester_list :selected').val();
+        ctxInit(s);
+    });
 
     $start.on('click', '#test', function(){
-        var s = $start.find("#semester_list :selected").val();
-        $start.addClass("hidden");
-        $main.removeClass("hidden");
-        startPlay(s, false);
+        $start.addClass('hidden');
+        $main.removeClass('hidden');
+        startPlay('test');
     });
 
     $start.on('click', '#practice', function(){
-        var s = $start.find("#semester_list :selected").val();
-        $start.addClass("hidden");
-        $main.removeClass("hidden");
-        startPlay(s, true);
+        $start.addClass('hidden');
+        $main.removeClass('hidden');
+        startPlay('practice');
     });
 
     $start.on('click', '#clear', function(){
-        var s = $start.find("#semester_list :selected").val();
-        clearData(s, false);
+        clearData(false);
     });
 
+    $list.trigger('change');
 });
