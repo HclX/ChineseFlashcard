@@ -4,26 +4,41 @@
 import sys
 
 s1 = """
-牢哇华哗害饱饿鹿已豆越经
-捞井夜连另接喘灰伯您糟喊
-等蜻竿捉蜓专蝴蝶意忘记湖
-暖舒音闹忽光世粒挺界挖湖
-吵淘狮爪求绳断驴伤如转现
-窝旁流羽差极句仍亲冠喔救
-所装答讲俩错逃传猎丢叼臭
-纸筝争溪折坏理思受喜欢停
-结实感砍造忍但鲜夏而且叔
-啄一直采蜜鼓遍催蜂钩劳丛
-整摆灯笼因表惭愧蝈提迷肚
-司假缸主慌吓浮桶念机汽重
+聪尾钻站脚底旧破网王为百
+算数共剩减加比骂道师棵课
+猜谜语脸镜知袋菜怪尖奇椅
+弯胸娃挂希望愿原照闪翻全
+蝌蚪细脑脱换裤咦件青蛙塘
+汗觉淋摸舔掌藏伸顶张匹清
+病翅膀难无第跟蹦远近同赛
+土木米目火虫些文趣古故汉
+收田阿姨刚正次带麻屋帐胖
+非常玉摘往满低扔追桃直真
+秋落凉当作蚂蚁沟信燕躲南
+瞧印留竹许梅晨静年升突然
 """
 
+py_dict = {}
 def load_dict():
-    py_dict = {}
     for line in open("dict.txt", "r", encoding='utf-8'):
         py_dict.update({x[0]: x[1:] for x in line.strip().split(',') if len(x)>1})
 
-    return py_dict
+py_word = {}
+def load_word():
+    for line in open("word.txt", "r", encoding="utf-8"):
+        word = line.split('\t')[0]
+        if len(word) != 2 and len(word) != 4:
+            continue
+        for i in range(0, len(word)):
+            key = word[i] if i == 0 else word[i] + '+'
+            if not key in py_word:
+                py_word[key] = [word]
+            else:
+                py_word[key].append(word)
+
+def find_words(char, num):
+    words = py_word.get(char, []) + py_word.get(char + '+', [])
+    return words[:num]
 
 unit = 1
 part = 'a'
@@ -75,8 +90,9 @@ print("*/", file=out_file)
 
 print(header.strip('\n'), file=out_file)
 
-py_dict = load_dict()
+load_dict()
+load_word()
 for s in s1.strip().splitlines():
-    ss = [(x, py_dict[x]) for x in s]
-    print(fmt.strip('\n') % "\n".join(['            ["%s", "%s", ""],' % sss for sss in ss]), file=out_file)
+    ss = [(x, py_dict[x], ','.join(find_words(x, 3))) for x in s]
+    print(fmt.strip('\n') % "\n".join(['            ["%s", "%s", "%s"],' % sss for sss in ss]), file=out_file)
 print(footer.strip('\n'), file=out_file)
