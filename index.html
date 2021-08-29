@@ -8,7 +8,7 @@
     <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
 </head>
 <body>
-    <div class="page" id="start">
+    <div class="page small" id="start">
         <select id="semester_list">
         <template id="semester_list_template">
             {{#data}}
@@ -16,9 +16,9 @@
             {{/data}}
         </template>
         </select>
-        <br>
         <input type="button" id="practice" value="练习">
         <input type="button" id="test" value="测试">
+        <input type="button" id="clear" value="清除">
     </div>
     <div class="page hidden" id="main">
         <div class="small">
@@ -27,7 +27,7 @@
         <div class="big" data-index="-1" id="character"></div>
         <div class="small hidden" id="practice">
             <div id="pinyin_display"></div>
-            <input type="text" id="pinyin_input" name="pinyin"/>
+            <input type="text" id="pinyin_input" name="pinyin" autocomplete="off"/>
         </div>
                 <!--<div id="progressBar"><div></div></div>-->
         <div class="small">
@@ -38,7 +38,9 @@
         </div>
     </div>
     <div class="page hidden" id="done">
-        <div class="big">完成！</div>
+        <div class="big">完成</div>
+        <div class="small" id="date"></div>
+        <div class="small" id="time"></div>
     </div>
     <div class="page hidden">
         <template id="tips_template">
@@ -58,7 +60,8 @@
     </div>
 </body>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.min.js"></script>
+<script src="./js/thirdparty/jquery.min.js"></script>
+<script src="./js/thirdparty/jquery-dateformat.min.js"></script>
+<script src="./js/thirdparty/mustache.min.js"></script>
 <script type="module" src="./js/main.js" charset="utf-8"></script>
 </html>

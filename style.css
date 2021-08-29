@@ -15,7 +15,11 @@ div {
 }
 
 .big {
-    font-size: 320px;
+    font-size: 240px;
+}
+
+.medium {
+    font-size: 60px;
 }
 
 .small {

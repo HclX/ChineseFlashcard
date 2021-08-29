@@ -1,3 +1,4 @@
+import semester_0a from "./data/0a.js"
 import semester_3a from "./data/3a.js"
 import semester_3b from "./data/3b.js"
 import semester_4a from "./data/4a.js"
@@ -5,6 +6,7 @@ import semester_4b from "./data/4b.js"
 import semester_5a from "./data/5a.js"
 
 var allSemesters = {
+    "0a": semester_0a,
     "3a": semester_3a,
     "3b": semester_3b,
     "4a": semester_4a,
@@ -72,27 +74,106 @@ function buildSmartPinyin(s) {
     }
 }
 
-function buildList(semesters) {
-    var list = [];
-    for (const s of semesters) {
-        for (let idx = 0; idx < s.chapters.length; idx ++) {
-            var chapter = s.chapters[idx];
-            for (const item of chapter) {
-                list.push({
-                    character: item[0],
-                    pinyin: item[1].split('/'),
-                    words: item[2],
-                    source: s.name + "--" + idx,
-                    score: 0
-                });
-            }
+function buildCharMap(sid) {
+    var charMap = {};
+    var s = allSemesters[sid]
+    for (let idx = 0; idx < s.chapters.length; idx ++) {
+        var chapter = s.chapters[idx];
+        for (const item of chapter) {
+            charMap[item[0]] = {
+                char: item[0],
+                pinyin: item[1].split('/'),
+                words: item[2],
+                source: s.name + "--" + idx,
+            };
         }
     }
-    return list;
+    return charMap;
 }
 
-var wordList = null;
-var wordCnt = 0;
+var _context = {}
+function ctxInit(sid) {
+    try {
+        _context = JSON.parse(localStorage.getItem("data_" + sid));
+    } catch (e) {
+        _context = null;
+    }
+
+    if (_context == null) {
+        _context = {sid:undefined, chars: undefined};
+    }
+
+    _context.sid = sid;
+    _context.chars = buildCharMap(sid);
+
+    // Initialize statistics if not available
+    if (!('stat' in _context)) {
+        _context['stat'] = {};
+    }
+
+    if (Object.keys(_context.stat).length === 0) {
+        for (var char in _context.chars) {
+            _context.stat[char] = {totalCnt: 1, failureCnt: 0};
+        }
+    }
+
+    // Initialize test data if not in the middle of a test
+    if (!('test' in _context)) {
+        _context['test'] = {};
+    }
+
+    if (!('chars' in _context.test)) {
+        _context.test['chars'] = {};
+    }
+    if (Object.keys(_context.test.chars).length === 0) {
+        for (var char in _context.chars) {
+            var totalCnt = Math.trunc(3 * _context.stat[char].failureCnt / _context.stat[char].totalCnt + 1);
+            _context.test.chars[char] = {totalCnt: totalCnt, correctCnt: 0};
+        }
+    }
+}
+
+function ctxUpdate(char, success) {
+    if (success) {
+        _context.test.chars[char].correctCnt ++;
+    } else {
+        _context.stat[char].failureCnt ++;
+        _context.test.chars[char].totalCnt ++;
+    }
+
+    _context.stat[char].totalCnt ++;
+    if (_context.test.chars[char].correctCnt === _context.test.chars[char].totalCnt) {
+        delete _context.test.chars[char];
+    }
+
+    // hide `sid` and `chars` in the JSON file
+    const progressObj = {..._context, sid: undefined, chars: undefined};
+    localStorage.setItem("data_" + _context.sid, JSON.stringify(progressObj));
+}
+
+function ctxClear() {
+    // hide `sid` and `chars` in the JSON file
+    const progressObj = {..._context, sid: undefined, chars: undefined, test: undefined};
+    localStorage.setItem("data_" + _context.sid, JSON.stringify(progressObj));
+}
+
+function ctxGetTestChar() {
+    var chars = Object.keys(_context.test.chars);
+    if (chars.length > 0) {
+        var index = Math.floor(Math.random() * chars.length);
+        var char = chars[index];
+        return {
+            char: char,
+            pinyin: _context.chars[char].pinyin,
+            words: _context.chars[char].words,
+            source: _context.chars[char].source,
+            score: _context.test.chars[char].correctCnt + "/" + _context.test.chars[char].totalCnt,
+            progress: chars.length + "/" + Object.keys(_context.chars).length,
+        }
+    } else {
+        return undefined;
+    }
+}
 
 var $start = null;
 var $main = null;
@@ -111,57 +192,70 @@ function progress(timeleft, timetotal, $element, done) {
 };
 
 function loadNext() {
-    if (wordList.length <= 0) {
+    var test = ctxGetTestChar();
+    if (!test) {
+        var endDate = new Date();
+        var minutesUsed = Math.trunc((endDate.getTime() - $main.data('start').getTime()) / 60000);
         $main.addClass("hidden");
         $done.removeClass("hidden");
+        $done.find("#date").html("完成于" + $.format.toBrowserTimeZone(endDate, "yyyy年M月d日 HH:mm:ss"));
+        $done.find("#time").html("用时" + minutesUsed + "分钟");
     } else {
-        var index = Math.floor(Math.random() * wordList.length);
-
-        $main.find("#character")
-            .html(wordList[index].character)
-            .data("index", index);
-
-        $main.find("#score").html(wordList[index].score);
+        $main.find("#character").html(test.char);
+        $main.find("#score").html(test.score);
         $main.find("#pinyin_input").focus().val("");
         $main.find("#pinyin_display").html("");
 
-        $("#progress").html(wordList.length + "/" + wordCnt);
-        // progress(10, 10, $('#progressBar'), loadNext);
+        $("#progress").html(test.progress);
+        var tips_template = $("#tips_template").html();
+        $main.find("#tips")
+            .addClass("hidden")
+            .html(Mustache.render(tips_template, test));
+        $main.data('test', test);
     }
 }
 
-function showTips(index) {
-    var tips_template = $("#tips_template").html();
-    $main.find("#tips")
-        .html(Mustache.render(tips_template, wordList[index]))
-        .removeClass("hidden");
+function showTips() {
+    $main.find("#tips").removeClass("hidden");
 }
 
 function hideTips() {
     $main.find("#tips").addClass("hidden");
 }
 
-function onAnswer(index, pinyin) {
-    if (wordList[index].pinyin.indexOf(pinyin) < 0) {
-        // wrong answer
-        showTips(index);
-        wordList[index].score --;
-        $main.find("#score").html(wordList[index].score);
+function onResult(result) {
+    var test = $main.data('test');
+    if (result) {
+        ctxUpdate(test.char, true);
+        loadNext();
     } else {
-        // correct answer
-        wordList[index].score ++;
-        if (wordList[index].score > 2) {
-            wordList.splice(index, 1);
-        }
+        // wrong answer
+        showTips();
+        ctxUpdate(test.char, false);
+    }
+}
 
-        hideTips();
+function onAnswer(pinyin) {
+    var test = $main.data('test');
+    if (test.pinyin.indexOf(pinyin) < 0) {
+        // wrong answer
+        showTips();
+        ctxUpdate(test.char, false);
+    } else {
+        ctxUpdate(test.char, true);
         loadNext();
     }
 }
 
-function startPlay(semester, practiceMode) {
-    wordList = buildList([semester]);
-    wordCnt = wordList.length;
+function clearData(sid, clearAll) {
+    ctxInit(sid);
+    ctxClear();
+}
+
+function startPlay(sid, practiceMode) {
+    ctxInit(sid);
+
+    $main.data("start", new Date());
 
     if (practiceMode) {
         $main.find("#practice").removeClass("hidden");
@@ -172,25 +266,19 @@ function startPlay(semester, practiceMode) {
             if (e.type == 'keyup' && 
                 (e.key === 'Enter' || e.keyCode === 13) &&
                 pinyin.length > 0) {
-                var index = $main.find("#character").data("index");
-                if (index >= 0) {
-                    onAnswer(index, pinyin);
-                }
+                onAnswer(pinyin);
             }
         });
     } else {
-        $main.find("#practice").addClass("hidden");
         var ENTER_KEY = 13;
         var SPACE_KEY = 32;
+        $main.find("#practice").addClass("hidden");
         $(document).keypress(function(event) {
-            var index =  $main.find("#character").data("index");
-            if (index >= 0) {
-                var keycode = (event.keyCode ? event.keyCode : event.which);
-                if (keycode == ENTER_KEY) {
-                    onAnswer(index, wordList[index].pinyin[0]);
-                } else if (keycode == SPACE_KEY) {
-                    onAnswer(index, "");
-                }
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            if (keycode == ENTER_KEY) {
+                onResult(true);
+            } else if (keycode == SPACE_KEY) {
+                onResult(false);
             }
         });
     }
@@ -204,9 +292,8 @@ $(function() {
     $done = $("#done");
 
     var semesters = Object.keys(allSemesters)
-    .sort()
+        .sort()
         .map(x => ({'id': x, 'name': allSemesters[x].name}));
-
     var semester_list_template = $start.find("#semester_list_template").html();
     var content = Mustache.render(semester_list_template, {data: semesters});
     $start.find("#semester_list").html(content);
@@ -215,14 +302,19 @@ $(function() {
         var s = $start.find("#semester_list :selected").val();
         $start.addClass("hidden");
         $main.removeClass("hidden");
-        startPlay(allSemesters[s], false);
+        startPlay(s, false);
     });
 
     $start.on('click', '#practice', function(){
         var s = $start.find("#semester_list :selected").val();
         $start.addClass("hidden");
         $main.removeClass("hidden");
-        startPlay(allSemesters[s], true);
+        startPlay(s, true);
+    });
+
+    $start.on('click', '#clear', function(){
+        var s = $start.find("#semester_list :selected").val();
+        clearData(s, false);
     });
 
 });
