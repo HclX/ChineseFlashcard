@@ -91,91 +91,91 @@ function buildCharMap(sid) {
     return charMap;
 }
 
-var MAX_TOTAL_CNT = 3;
+var MAX_TARGET_CNT = 3;
 
-var _context = {}
+var _ctx = {}
 function ctxInit(sid) {
     try {
-        _context = JSON.parse(localStorage.getItem('data_' + sid));
+        _ctx = JSON.parse(localStorage.getItem('data_' + sid));
     } catch (e) {
-        _context = null;
+        _ctx = null;
     }
 
-    if (_context === null) {
-        _context = {sid:undefined, chars: undefined};
+    if (_ctx === null) {
+        _ctx = {sid:undefined, chars: undefined};
     }
 
-    _context.sid = sid;
-    _context.chars = buildCharMap(sid);
+    _ctx.sid = sid;
+    _ctx.chars = buildCharMap(sid);
 
     // Initialize statistics if not available
-    if (!('stat' in _context)) {
-        _context['stat'] = {};
+    if (!('stat' in _ctx)) {
+        _ctx['stat'] = {};
     }
 
-    if (Object.keys(_context.stat).length === 0) {
-        for (var char in _context.chars) {
-            _context.stat[char] = {totalCnt: 1, failureCnt: 1};
+    if (Object.keys(_ctx.stat).length === 0) {
+        for (var char in _ctx.chars) {
+            _ctx.stat[char] = {totalCnt: 1, failureCnt: 1};
         }
     }
 
     // Initialize test data if not in the middle of a test
-    if (!('test' in _context)) {
-        _context['test'] = {};
+    if (!('test' in _ctx)) {
+        _ctx['test'] = {};
     }
 
-    if (!('chars' in _context.test)) {
-        _context.test['chars'] = {};
+    if (!('chars' in _ctx.test)) {
+        _ctx.test['chars'] = {};
     }
-    if (Object.keys(_context.test.chars).length === 0) {
-        for (var char in _context.chars) {
-            var totalCnt = Math.trunc((MAX_TOTAL_CNT - 1) * _context.stat[char].failureCnt / _context.stat[char].totalCnt + 1);
-            _context.test.chars[char] = {totalCnt: totalCnt, correctCnt: 0};
+    if (Object.keys(_ctx.test.chars).length === 0) {
+        for (var char in _ctx.chars) {
+            var failureRate = _ctx.stat[char].failureCnt / _ctx.stat[char].totalCnt;
+            var targetCnt = Math.ceil(Math.sqrt(failureRate) * MAX_TARGET_CNT);
+            _ctx.test.chars[char] = {targetCnt: targetCnt, correctCnt: 0};
         }
     }
 }
 
-
 function ctxUpdate(char, success) {
     if (success) {
-        _context.test.chars[char].correctCnt ++;
+        _ctx.test.chars[char].correctCnt ++;
     } else {
-        _context.stat[char].failureCnt ++;
-        _context.test.chars[char].totalCnt ++;
+        _ctx.stat[char].failureCnt ++;
+        _ctx.test.chars[char].targetCnt ++;
     }
 
-    if (_context.test.chars[char].totalCnt > MAX_TOTAL_CNT) {
-        _context.test.chars[char].totalCnt = MAX_TOTAL_CNT;
+    if (_ctx.test.chars[char].targetCnt > MAX_TARGET_CNT) {
+        _ctx.test.chars[char].targetCnt = MAX_TARGET_CNT;
     }
 
-    _context.stat[char].totalCnt ++;
-    if (_context.test.chars[char].correctCnt >= _context.test.chars[char].totalCnt) {
-        delete _context.test.chars[char];
+    _ctx.stat[char].totalCnt ++;
+    if (_ctx.test.chars[char].correctCnt >= _ctx.test.chars[char].targetCnt) {
+        delete _ctx.test.chars[char];
     }
 
     // hide `sid` and `chars` in the JSON file
-    const progressObj = {..._context, sid: undefined, chars: undefined};
-    localStorage.setItem('data_' + _context.sid, JSON.stringify(progressObj));
+    const progressObj = {..._ctx, sid: undefined, chars: undefined};
+    localStorage.setItem('data_' + _ctx.sid, JSON.stringify(progressObj));
 }
 
 function ctxClear() {
     // hide `sid` and `chars` in the JSON file
-    const progressObj = {..._context, sid: undefined, chars: undefined, test: undefined};
-    localStorage.setItem('data_' + _context.sid, JSON.stringify(progressObj));
+    const progressObj = {..._ctx, sid: undefined, chars: undefined, test: undefined};
+    localStorage.setItem('data_' + _ctx.sid, JSON.stringify(progressObj));
 }
 
 function ctxGetTestChar() {
-    var chars = Object.keys(_context.test.chars);
+    var chars = Object.keys(_ctx.test.chars);
     if (chars.length > 0) {
         var index = Math.floor(Math.random() * chars.length);
         var char = chars[index];
         return {
             char: char,
-            pinyin: _context.chars[char].pinyin,
-            words: _context.chars[char].words,
-            source: _context.chars[char].source,
-            score: _context.test.chars[char].correctCnt + '/' + _context.test.chars[char].totalCnt,
-            progress: chars.length + '/' + Object.keys(_context.chars).length,
+            pinyin: _ctx.chars[char].pinyin,
+            words: _ctx.chars[char].words,
+            source: _ctx.chars[char].source,
+            score: _ctx.test.chars[char].correctCnt + '/' + _ctx.test.chars[char].targetCnt,
+            progress: chars.length + '/' + Object.keys(_ctx.chars).length,
         }
     } else {
         return undefined;
