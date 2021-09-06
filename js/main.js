@@ -84,7 +84,7 @@ function buildCharMap(sid) {
                 char: item[0],
                 pinyin: item[1].split('/'),
                 words: item[2],
-                source: s.name + '--' + idx,
+                source: s.name + '--' + (idx + 1),
             };
         }
     }
