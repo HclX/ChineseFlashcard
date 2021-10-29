@@ -1,66 +1,80 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>中文字卡</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
 </head>
+
 <body>
     <div class="page" id="start">
-        <select id="semester_list">
-        <template id="semester_list_template">
-            {{#data}}
-            <option value="{{id}}">{{name}}</option>
-            {{/data}}
-        </template>
-        </select>
+        <select id="semester_list"></select>
         <input type="button" id="practice" value="练习">
         <input type="button" id="test" value="测试">
         <input type="button" id="clear" value="清除">
     </div>
+
     <div class="page hidden" id="main">
-        <div class="small">
-            <span id="progress"></span>
+        <div id="progress"></div>
+        <div class="flex-container">
+            <div class="flex-child" data-index="-1" id="card"></div>
+            <div class="flex-child hidden" id="tips"></div>
         </div>
-        <div class="big" data-index="-1" id="character"></div>
-        <div class="small hidden" id="practice">
-            <div id="pinyin_display"></div>
-            <input type="text" id="pinyin_input" name="pinyin" autocomplete="off"/>
+        <div class="hidden" id="pinyin">
+            <div></div>
+            <br>
+            <input type="text" autocomplete="off" spellcheck="false"/>
         </div>
-        <div class="small">
-            <span>Score:</span>
-            <span id="score">{{score}}</span>
-        </div>
-        <div class="small hidden" id="tips">
-        </div>
+        <div id="score"></div>
     </div>
+
     <div class="page hidden" id="done">
         <div class="big">完成</div>
-        <div class="small" id="date"></div>
-        <div class="small" id="time"></div>
+        <br>
+        <div id="date"></div>
+        <div id="time"></div>
     </div>
-    <div class="page hidden">
-        <template id="tips_template">
-            <div>
-                <span>拼音：</span>
-                <span id="pinyin">{{pinyin}}</span>
-            </div>
-            <div>
-                <span>词语：</span>
-                <span id="words">{{words}}</span>
-            </div>
-            <div>
-                <span>单元：</span>
-                <span id="source">{{source}}</span>
-            </div>
-        </template>
-    </div>
+
+    <template id="semester_list_template">
+        {{#data}}
+        <option value="{{id}}">{{name}}</option>
+        {{/data}}
+    </template>
+
+    <template id="tips_template">
+        <div>
+            <table>
+                <tr>
+                    <td>拼音：</td>
+                    <td>{{pinyin}}</td>
+                </tr>
+                <tr>
+                    <td>词语：</td>
+                    <td>{{words}}</td>
+                </tr>
+                <tr>
+                    <td>单元：</td>
+                    <td>{{source}}</td>
+                </tr>
+            </table>
+        </div>
+    </template>
+
+    <template id="progress_template">
+        <span>
+            <progress id="progress" value="{{value}}" max="{{max}}"></progress>
+        </span>
+        <span>{{text}}</span>
+    </template>
+
 </body>
 
 <script src="./js/thirdparty/jquery.min.js"></script>
 <script src="./js/thirdparty/jquery-dateformat.min.js"></script>
 <script src="./js/thirdparty/mustache.min.js"></script>
 <script type="module" src="./js/main.js" charset="utf-8"></script>
+
 </html>

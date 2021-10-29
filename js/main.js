@@ -177,7 +177,10 @@ function ctxGetTestChar() {
             words: _ctx.chars[char].words,
             source: _ctx.chars[char].source,
             score: _ctx.test.chars[char].correctCnt + '/' + _ctx.test.chars[char].targetCnt,
-            progress: chars.length + '/' + Object.keys(_ctx.chars).length,
+            progress: {
+                value: chars.length,
+                max: Object.keys(_ctx.chars).length,
+                text: chars.length + "/" + Object.keys(_ctx.chars).length},
         }
     } else {
         return undefined;
@@ -198,12 +201,14 @@ function loadNext() {
         $done.find('#date').html('完成于' + $.format.toBrowserTimeZone(endDate, 'yyyy年M月d日 HH:mm:ss'));
         $done.find('#time').html('用时' + minutesUsed + '分钟');
     } else {
-        $main.find('#character').html(test.char);
+        $main.find('#card').html(test.char);
         $main.find('#score').html(test.score);
-        $main.find('#pinyin_input').focus().val('');
-        $main.find('#pinyin_display').html('');
+        $main.find('#pinyin input').focus().val('');
+        $main.find('#pinyin div').html('');
 
-        $('#progress').html(test.progress);
+        var progress_template = $('#progress_template').html();
+        $main.find("#progress").html(Mustache.render(progress_template, test.progress));
+
         var tips_template = $('#tips_template').html();
         $main.find('#tips')
             .addClass('hidden')
@@ -252,18 +257,18 @@ var SPACE_KEY = 32;
 function startPlay(mode) {
     $main.data('start', new Date());
     if (mode === 'practice') {
-        $main.find('#practice').removeClass('hidden');
-        $main.on('change keyup paste', '#pinyin_input', function(e) {
-            var pinyin = buildSmartPinyin($('#pinyin_input').val());
-            $('#pinyin_display').html(pinyin);
+        $main.find('#pinyin').removeClass('hidden');
+        $main.on('change keyup paste', '#pinyin input', function(e) {
+            var pinyin = buildSmartPinyin($('#pinyin input').val());
+            $('#pinyin div').html(pinyin);
 
             if (e.type === 'keyup' && e.keyCode === ENTER_KEY && pinyin.length > 0) {
-                $('#pinyin_input').select();
+                $('#pinyin input').select();
                 onAnswer(pinyin);
             }
         });
     } else if (mode === 'test') {
-        $main.find('#practice').addClass('hidden');
+        $main.find('#pinyin').addClass('hidden');
         $(document).keypress(function(event) {
             var keycode = (event.keyCode ? event.keyCode : event.which);
             if (keycode === ENTER_KEY) {
@@ -289,7 +294,7 @@ $(function() {
     var semesters = Object.keys(allSemesters)
         .sort()
         .map(x => ({'id': x, 'name': allSemesters[x].name}));
-    var semester_list_template = $start.find('#semester_list_template').html();
+    var semester_list_template = $('#semester_list_template').html();
     var content = Mustache.render(semester_list_template, {data: semesters});
     $list.html(content);
 

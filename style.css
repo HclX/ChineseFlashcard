@@ -2,46 +2,66 @@ body {
     background: black;
     color:white;
     font-family: 'SimSun';
-}
-button {
-    background-color: gray;
-    border: none;
-    color: white;
+    font-size: medium;
 }
 
-div {
+.page {
+    position: absolute;
+    top: 50%;
+    left: 50%;
     text-align: center;
-    color: white;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
 }
 
 .big {
-    font-size: 240px;
+    font-size: 120px;
 }
 
-.medium {
-    font-size: 60px;
-}
-
-.small {
-    font-size: 50px;
-}
 .hidden {
     display:none
 }
 
-#progressBar {
-    width: 90%;
-    margin: 10px auto;
-    height: 22px;
-    background-color: #0A5F44;
+.checked {
+    color: orange;
 }
-  
-#progressBar div {
-    height: 100%;
-    text-align: right;
-    padding: 0 10px;
-    line-height: 22px; /* same as #progressBar height if we want text middle aligned */
-    width: 0;
-    background-color: #CBEA00;
-    box-sizing: border-box;
+
+.flex-container {
+    display: flex;
+}
+
+.flex-child {
+    flex: 1;
+}
+
+.flex-child:first-child {
+    margin-right: 20px;
+}
+
+#card {
+    font-size: 360px;
+}
+
+#score {
+    text-align: center;
+}
+
+#pinyin div {
+    font-size: 48px;
+    margin:5px;
+    height: 50px;
+}
+
+#pinyin input {
+    font-size: 16px;
+    text-align: center; 
+}
+
+#tips div {
+    font-size: 24px;
+}
+
+#tips table {
+    text-align: left;
+    margin-top: 30px;
 }
