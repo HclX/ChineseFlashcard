@@ -5,6 +5,7 @@ import semester_4a from './data/4a.js'
 import semester_4b from './data/4b.js'
 import semester_5a from './data/5a.js'
 import semester_5b from './data/5b.js'
+import semester_6a from './data/6a.js'
 
 var allSemesters = {
     '0a': semester_0a,
@@ -14,6 +15,7 @@ var allSemesters = {
     '4b': semester_4b,
     '5a': semester_5a,
     '5b': semester_5b,
+    '6a': semester_6a,
 };
 
 function buildPinyin(s) {

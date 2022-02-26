@@ -3,13 +3,15 @@
 
 import sys
 
+unit = 6
+part = 'a'
+
 s1 = """
-爽坚持临杰夕洒参涂塔映环糊桨愚
-属灵努负责割武敌祥瑞尺寸迟肖吱
-卷岩欣赏炎演焦蕉艘驶跨辆洁按鞭
-修劝灾罐补歉舌亡旱枯批据谅娘圈
-初雾厚寒砸牌胃勿扰估猬蘑菇模茫芒
-解悉设柜与闲尤敲嚼甚怀逐庭增优
+轰隆赚况投封帘扇厅炼锻震危险冒
+嫌仙盼齐咱毯术椒约预舱炒讶秒着
+徐夺牵毫宫默闯啼蟹扛晓妖绑符喝
+禁嫩耀展业跃甲示痒怒怜魔苞丈漂
+裂丑庆厌讨独孤兄晃厉陪般驾弹
 """
 
 py_dict = {}
@@ -33,9 +35,6 @@ def load_word():
 def find_words(char, num):
     words = py_word.get(char, []) + py_word.get(char + '+', [])
     return words[:num]
-
-unit = 1
-part = 'a'
 
 out_file = sys.stdout
 if len(sys.argv) > 1 and len(sys.argv[1]) == 2:
