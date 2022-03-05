@@ -180,7 +180,7 @@ function ctxGetTestChar() {
             source: _ctx.chars[char].source,
             score: _ctx.test.chars[char].correctCnt + '/' + _ctx.test.chars[char].targetCnt,
             progress: {
-                value: chars.length,
+                value: Object.keys(_ctx.chars).length - chars.length,
                 max: Object.keys(_ctx.chars).length,
                 text: chars.length + "/" + Object.keys(_ctx.chars).length},
         }
@@ -253,9 +253,6 @@ function clearData(clearAll) {
     ctxClear();
 }
 
-var ENTER_KEY = 13;
-var SPACE_KEY = 32;
-
 function startPlay(mode) {
     $main.data('start', new Date());
     if (mode === 'practice') {
@@ -264,7 +261,7 @@ function startPlay(mode) {
             var pinyin = buildSmartPinyin($('#pinyin input').val());
             $('#pinyin div').html(pinyin);
 
-            if (e.type === 'keyup' && e.keyCode === ENTER_KEY && pinyin.length > 0) {
+            if (e.type === 'keyup' && e.key === "Enter" && pinyin.length > 0) {
                 $('#pinyin input').select();
                 onAnswer(pinyin);
             }
@@ -272,10 +269,9 @@ function startPlay(mode) {
     } else if (mode === 'test') {
         $main.find('#pinyin').addClass('hidden');
         $(document).keypress(function(event) {
-            var keycode = (event.keyCode ? event.keyCode : event.which);
-            if (keycode === ENTER_KEY) {
+            if (event.key === "Enter") {
                 onResult(true);
-            } else if (keycode === SPACE_KEY) {
+            } else if (event.key === " " || event.key === "+") {
                 onResult(false);
             }
         });
