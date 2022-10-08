@@ -42,21 +42,15 @@ def find_words(char, num):
     words = py_word.get(char, []) + py_word.get(char + '+', [])
     return words[:num]
 
-out_file = sys.stdout
-if len(sys.argv) > 1 and len(sys.argv[1]) == 2:
-    unit = int(sys.argv[1][0])
-    part = sys.argv[1][1]
+if unit < 1 or unit > 9:
+    print("Invalid unit: %s" % unit)
+    sys.exit(1)
 
-    if unit < 1 or unit > 9:
-        print("Invalid unit: %s" % unit)
-        sys.exit(1)
+if part not in ['a', 'b']:
+    print("Invalid part: %s" % part)
+    sys.exit(1)
 
-    if part not in ['a', 'b']:
-        print("Invalid part: %s" % part)
-        sys.exit(1)
-
-    out_file = open("%d%s.js" %(unit, part), "w", encoding="utf-8")
-
+out_file = open("%d%s.js" %(unit, part), "w", encoding="utf-8")
 
 header = \
 """
