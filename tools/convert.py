@@ -4,20 +4,15 @@
 import sys
 
 unit = 7
-part = 'a'
+part = 'b'
 
 s1 = """
-概括释类患误粘余途疗烂浆阻呕吐
-集诞律菩萨探恐否酪诱粮淌织伍捆处
-筑摄繁姜慧智览创固砖绍介孟婚
-索毁锁享产刮悔统狂袖翁乒乓恢
-喷谷尸拐腊咒饥拢拦宵杖掏馒
-族揉俗刘宙宇馅聊倍朱捣济偏吴
-姿势鞠躬乏励典帅恋贾陌症颊术落
-截际规畅阅章犬构码媳仓态惑枪
-耍叠菌堵孝素堂未访财挤烈待旺兴
-贫承泣祈祷顽卢坑铲训奖遵欺几
-翼聘抛唇蒜晶泉尔碌噜纽蹄境铜
+貌澈欲乖跌舀若腔职勃聋哑跤柔闷 
+存暴允航栅栏逼毒控咽痕疤蛀呜没
+权私魏状哼免延葛诸攻惩漆胶番防
+殿踏宴归琴致魏签撤占呵瑜拇朝
+雁饮蒸斑腐壳废愈焰饪烹描煎俱铺
+舅匀均倾仁席舍茶掀彻酱爆傅都 
 """
 
 py_dict = {}
@@ -86,6 +81,6 @@ print(header.strip('\n'), file=out_file)
 load_dict()
 load_word()
 for s in s1.strip().splitlines():
-    ss = [(x, py_dict[x], ','.join(find_words(x, 3))) for x in s]
+    ss = [(x, py_dict.get(x, ''), ','.join(find_words(x, 3))) for x in s.strip()]
     print(fmt.strip('\n') % "\n".join(['            ["%s", "%s", "%s"],' % sss for sss in ss]), file=out_file)
 print(footer.strip('\n'), file=out_file)
